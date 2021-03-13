@@ -51,4 +51,4 @@ setTimeout(() => {
     console.log(Array.from(sortByValue(human)).slice(0, size));
     console.log(Array.from(sortByValue(paths)).slice(0, size));
     process.exit(0);
-}, 10 * 1000)//5 min
+}, 5 * 60 * 1000)//5 min
