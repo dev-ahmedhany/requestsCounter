@@ -1,6 +1,6 @@
 ﻿# requestsCounter
 
-quick tool to count requests on port 80 for centos 7
+quick tool to count Http requests for centos 7
 
 First Install node js
 
