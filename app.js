@@ -61,7 +61,7 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Ahmed Hany's app listening at port ${port}`);
 })
 
 setTimeout(() => {
@@ -75,4 +75,4 @@ setTimeout(() => {
     console.log("Top 20 Humans");
     console.log(Array.from(sortByValue(URhuman)).slice(0, size));
     process.exit(0);
-}, 20 * 1000)//5 min
+}, 5 * 60 * 1000)//5 min
