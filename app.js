@@ -2,22 +2,36 @@ const express = require('express')
 const app = express();
 const port = 80;
 
-const page = `
+const URpage = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ELC - Human</title>
+</head>
+<body>
+    <p>Please Stay here 5 minutes</p>
+    <a href="/">Home</a>
+</body>
+</html>
+`;
+
+const RUpage = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>ELC - Human Test</title>
 </head>
 <body>
-    <p>This is test Page Please Stay here 5 minutes</p>
-    <a href="/">Home</a>
+    <p>Are You Human ?</p>
+    <a href="/URhuman">Click Here</a>
 </body>
 </html>
 `;
 
 let ips = new Map();
 let paths = new Map();
-let human = new Map();
+let RUhuman = new Map();
+let URhuman = new Map();
 const size = 20;
 
 let sortByValue = (myMap) => new Map([...myMap.entries()].sort((a, b) => b[1] - a[1]));
@@ -31,13 +45,18 @@ let plusone = (map, key) => {
 }
 
 app.get('/RUhuman', (req, res) => {
-    plusone(human, req.ip);
-    res.send(page);
+    plusone(RUhuman, req.ip);
+    res.send(RUpage);
+})
+
+app.get('/URhuman', (req, res) => {
+    plusone(URhuman, req.ip);
+    res.send(URpage);
 })
 
 app.use((req, res) => {
     plusone(ips, req.ip);
-    plusone(paths, req.path);
+    plusone(paths, req.method + req.path);
     res.redirect("/RUhuman");
 });
 
@@ -47,8 +66,13 @@ app.listen(port, () => {
 
 setTimeout(() => {
     // sort by value
+    console.log("Top 20 ip");
     console.log(Array.from(sortByValue(ips)).slice(0, size));
-    console.log(Array.from(sortByValue(human)).slice(0, size));
+    console.log("Top 20 Requests");
     console.log(Array.from(sortByValue(paths)).slice(0, size));
+    console.log("Top 20 Human Test");
+    console.log(Array.from(sortByValue(RUhuman)).slice(0, size));
+    console.log("Top 20 Humans");
+    console.log(Array.from(sortByValue(URhuman)).slice(0, size));
     process.exit(0);
-}, 5 * 60 * 1000)//5 min
+}, 20 * 1000)//5 min
