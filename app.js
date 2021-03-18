@@ -6,7 +6,7 @@ const URpage = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ELC - Human</title>
+    <title>Human</title>
 </head>
 <body>
     <p>Please Stay here 5 minutes</p>
@@ -19,7 +19,7 @@ const RUpage = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ELC - Human Test</title>
+    <title>Human Test</title>
 </head>
 <body>
     <p>Are You Human ?</p>
@@ -54,6 +54,15 @@ app.get('/URhuman', (req, res) => {
     res.send(URpage);
 })
 
+app.get('/count', (req, res) => {
+    let data = {};
+    data.Top20ip = Array.from(sortByValue(ips)).slice(0, size);
+    data.Top20req = Array.from(sortByValue(paths)).slice(0, size);
+    data.Top20HumanTest = Array.from(sortByValue(RUhuman)).slice(0, size);
+    data.Top20Human = Array.from(sortByValue(URhuman)).slice(0, size);
+    res.json(data);
+})
+
 app.use((req, res) => {
     plusone(ips, req.ip);
     plusone(paths, req.method + req.path);
@@ -62,17 +71,4 @@ app.use((req, res) => {
 
 app.listen(port, () => {
     console.log(`Ahmed Hany's app listening at port ${port}`);
-})
-
-setTimeout(() => {
-    // sort by value
-    console.log("Top 20 ip");
-    console.log(Array.from(sortByValue(ips)).slice(0, size));
-    console.log("Top 20 Requests");
-    console.log(Array.from(sortByValue(paths)).slice(0, size));
-    console.log("Top 20 Human Test");
-    console.log(Array.from(sortByValue(RUhuman)).slice(0, size));
-    console.log("Top 20 Humans");
-    console.log(Array.from(sortByValue(URhuman)).slice(0, size));
-    process.exit(0);
-}, 5 * 60 * 1000)//5 min
+});
